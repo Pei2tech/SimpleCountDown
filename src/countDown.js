@@ -1,4 +1,4 @@
-class Countdown {
+﻿class Countdown {
 
     get TIMESTAMP_SECOND() { return 1000; }
     get TIMESTAMP_MINUTE() { return 60 * this.TIMESTAMP_SECOND; }
@@ -14,6 +14,7 @@ class Countdown {
         this.options = {
             cont: null,
             countdown: true,
+            offset: null,
             date: {
                 year: 0,
                 month: 0,
@@ -41,35 +42,61 @@ class Countdown {
         this.elementClassPrefix = 'countDown_';
         this.interval = null;
         this.digitConts = {};
-
-        this._assignOptions(this.options, userOptions);
+        this.dateData=null;  
+         this._assignOptions(this.options, userOptions);
     }
 
-    start() {
-        let date,
-            dateData;
-
-        this._fixCompatibility();
-
-        date = this._getDate(this.options.date);
-
-        dateData = this._prepareTimeByOutputFormat(date);
-
+    init() {
+        let date = this._getDate(Date.now());
+        let dateData = this._prepareTimeByOutputFormat(date);
         this._writeData(dateData);
+    }
+    set(setCutdown, offset){
+        this.options.countdown=setCutdown;
+        this.options.offset=offset;
+    }
+    start() {
+        let date, dateData;
+        this.stop();
+        this.digitConts = {};
+        this._fixCompatibility();        
+        if (this.options.countdown) {
+            this.options.date = Date.now() + this.options.offset;
+            date = this._getDate(this.options.date);
+            this.lastTick = null;
+            this.interval=null;
+        }else{
+            this.options.date=Date.now();
+                    // date = this._getDate(Date.now() - this.options.offset);               
+            this.lastTick = null;
+            this.interval=null;
+            date = this._getDate(this.options.date);
+       }
 
-        this.lastTick = dateData;
+            dateData = this._prepareTimeByOutputFormat(date);
+
+            this._writeData(dateData);
+
+            this.lastTick = dateData;
 
         if (this.options.countdown && date.getTime() <= Date.now()) {
-            if (typeof this.options.endCallback === 'function') {
                 this.stop();
+            if (typeof this.options.endCallback === 'function') {
                 this.options.endCallback();
             }
         } else {
             this.interval = setInterval(
                 () => {
+                    if (this.options.countdown && date.getTime() <= Date.now()) {
+                        this.stop();
+                        if (typeof this.options.endCallback === 'function') {
+                            this.options.endCallback();
+                        }
+                    } else {
                     this._updateView(
                         this._prepareTimeByOutputFormat(date)
                     );
+                    }
                 },
                 this.TIMESTAMP_SECOND
             );
@@ -138,7 +165,8 @@ class Countdown {
         });
 
         timeDiff = this.options.countdown ? dateObj.getTime() - Date.now() : Date.now() - dateObj.getTime();
-
+        if (this.options.countdown & (timeDiff % 100 ===0))
+            timeDiff -=10
         usedIntervals.forEach(item => {
             let value;
             if (timeDiff > 0) {
@@ -331,3 +359,8 @@ class Countdown {
         }
     }
 }
+
+if (typeof(window) !== 'undefined') {
+    window.Countdown = Countdown;
+}
+

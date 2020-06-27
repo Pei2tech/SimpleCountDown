@@ -8,37 +8,85 @@
     <link href="style.css" media="all" rel="stylesheet" />
     <style>
         body {
-            color: white;
+            color: #5f45ff;
         }
     </style>
 </head>
 <body>
-    <h2>CountDown 1</h2>
+    <h2>CountDown 1 </h2>
     <div class="container"></div>
     <script>
-        var cd = new Countdown({
-            cont: document.querySelector('.container'),
-            date: 1993468400000,
-            outputTranslation: {
-                year: 'Years',
-                week: 'custom_string_Weeks',
-                day: 'Days',
-                hour: 'Hours',
-                minute: 'Minutes',
-                second: 'Seconds',
+         function CounterTimer(countdown=true, offset){
+            var cd = new Countdown({
+                cont: document.querySelector('.container'),
+                countdown: countdown,
+                offset: offset,
+                // date: new Date(0,1,1) ,
+                outputTranslation: {
+                    year: 'Years',
+                    week: 'Weeks',
+                    day: '',
+                    hour: '',
+                    minute: '',
+                    second: '',
             },
             endCallback: null,
-            outputFormat: 'week|day|hour|minute|second',
+            // outputFormat: 'hour|minute|second',
+            outputFormat: 'hour|minute|second',
         });
-        cd.start();
+        // cd.init();
+        return cd;
+        // cd.start();
+      };
+      cd= new CounterTimer(true,(5*1+20)*1000);
+      cd.init()
+      cd.start();
+      setTimeout(()=>cd.stop(),5000);
+      setTimeout(()=>cd.set(false,0),6000);
+      setTimeout(()=>cd.start(),7000);
+
+
+
+        // var cd = new Countdown({
+        //     cont: document.querySelector('.container'),
+        //     countdown: true,
+        //     // date: 1993468400000,
+        //     date: {
+        //         day: 1,
+        //         month: 7,
+        //         year: 2020,
+        //         hour: 23,
+        //         minute: 10,
+        //         second: 0,
+        //     },
+        //     outputTranslation: {
+        //         year: 'Years',
+        //         week: 'custom_string_Weeks',
+        //         day: 'Days',
+        //         hour: 'Hours',
+        //         minute: 'Minutes',
+        //         second: 'Seconds',
+        //     },
+        //     endCallback: null,
+        //     outputFormat: 'week|day|hour|minute|second',
+        //     // outputFormat: 'minute|second',
+        // });
+        // cd.start();
+        // setTimeout(()=>cd.stop(),5000);
     </script>
 
-    <h2>CountDown 2</h2>
+    <h2> CountDown 2 </h2>
     <div class="container2"></div>
+    <button type="button" onclick="cd2.start()">start</button>
+    <button type="button" onclick="cd2.set(true,6*1000)">set</button>
+    <button type="button" onclick="cd2.stop()">stop</button>
     <script>
         var cd2 = new Countdown({
             cont: document.querySelector('.container2'),
-            date: 1593468412000,
+            countdown: true,
+            offset: (5*0+20) * 1000,
+            // date: Date.now() + (5*0+20) * 1000,
+            //1593468412000,
             outputTranslation: {
                 year: 'Years',
                 week: 'custom_string_Weeks',
@@ -50,17 +98,25 @@
             endCallback: null,
             outputFormat: 'week|day|hour|minute|second',
         });
-        cd2.start();
+        cd2.init();
+        // cd2.start();
+        // setTimeout(()=>cd2.pause(),5000);
+        // setTimeout(()=>cd2.start(),10000);
     </script>
 
 
     <h2>CountUp 1</h2>
     <div class="container3"></div>
+    <button type="button" onclick="cd3.start()">start</button>
+<!--    <button type="button" onclick="cd3.pause()">pause</button>-->
+    <button type="button" onclick="cd3.stop()">stop</button>
     <script>
         var cd3 = new Countdown({
             cont: document.querySelector('.container3'),
             countdown: false,
-            date: Date.now(),
+            // date: Date.now(),
+            offset:0,
+            date:new Date(0, 1, 1),
             outputTranslation: {
                 year: 'Years',
                 week: 'Weeks',
@@ -72,7 +128,12 @@
             endCallback: null,
             outputFormat: 'week|day|hour|minute|second',
         });
-        cd3.start();
+        cd3.init()
+        // cd3.start();
+        // setTimeout(()=>cd3.stop(),5000);
+        // setTimeout(()=>cd3.start(),10000);
+        // setTimeout(()=>cd3.stop(),21000);
+        // cd3.init();
     </script>
 
     <h2>CountUp 2</h2>
@@ -81,19 +142,23 @@
         var cd4 = new Countdown({
             cont: document.querySelector('.container4'),
             countdown: false,
-            date: Date.now() - 50000000,
+            offset: 0,            
+            date: Date.now(),
             outputTranslation: {
                 year: 'Years',
                 week: 'Weeks',
                 day: 'Days',
                 hour: 'Hours',
-                minute: 'Minutes',
+                minute: '',
                 second: 'Seconds',
             },
             endCallback: null,
-            outputFormat: 'week|day|hour|minute|second',
+            // outputFormat: 'week|day|hour|minute|second',
+            outputFormat: 'minute|second',
         });
-        cd4.start();
+        // cd4.init()
+        // cd4.start();
     </script>
+
 </body>
 </html>
