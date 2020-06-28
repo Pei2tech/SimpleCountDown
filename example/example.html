@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Simple Countdown</title>
     
-    <script src="countDown.min.js"></script>
+    <script src="countDown.js"></script>
     <link href="style.css" media="all" rel="stylesheet" />
     <style>
         body {
@@ -16,7 +16,9 @@
     <h2>CountDown 1 </h2>
     <div class="container"></div>
     <script>
-         function CounterTimer(countdown=true, offset){
+
+
+         function CounterTimer(countdown=true, offset, funct){
             var cd = new Countdown({
                 cont: document.querySelector('.container'),
                 countdown: countdown,
@@ -30,7 +32,7 @@
                     minute: '',
                     second: '',
             },
-            endCallback: null,
+            endCallback:funct,
             // outputFormat: 'hour|minute|second',
             outputFormat: 'hour|minute|second',
         });
@@ -38,12 +40,17 @@
         return cd;
         // cd.start();
       };
-      cd= new CounterTimer(true,(5*1+20)*1000);
+      cd= new CounterTimer(true,0);
       cd.init()
+      cd.set(true,10*1000,test)
       cd.start();
       setTimeout(()=>cd.stop(),5000);
-      setTimeout(()=>cd.set(false,0),6000);
-      setTimeout(()=>cd.start(),7000);
+
+      function test(){
+             alert("hhh")
+         }
+      // setTimeout(()=>cd.set(false,0),6000);
+      // setTimeout(()=>cd.start(),7000);
 
 
 

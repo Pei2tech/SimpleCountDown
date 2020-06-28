@@ -51,9 +51,10 @@
         let dateData = this._prepareTimeByOutputFormat(date);
         this._writeData(dateData);
     }
-    set(setCutdown, offset){
+    set(setCutdown, offset, gofunct){
         this.options.countdown=setCutdown;
         this.options.offset=offset;
+        this.options.endCallback=gofunct;
     }
     start() {
         let date, dateData;
